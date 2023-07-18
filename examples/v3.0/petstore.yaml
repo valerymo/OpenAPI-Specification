@@ -81,6 +81,10 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 components:
+  securitySchemes:
+    OIDC:
+      type: openIdConnect
+      openIdConnectUrl: https://example.com/.well-known/openid-configuration
   schemas:
     Pet:
       type: object
