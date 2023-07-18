@@ -11,6 +11,9 @@ paths:
     get:
       summary: List all pets
       operationId: listPets
+      security:
+        - openId:
+            - pets_read
       tags:
         - pets
       parameters:
@@ -31,7 +34,7 @@ paths:
               schema:
                 type: string
           content:
-            application/json:    
+            application/json:
               schema:
                 $ref: "#/components/schemas/Pets"
         default:
@@ -43,6 +46,9 @@ paths:
     post:
       summary: Create a pet
       operationId: createPets
+      security:
+        - openId:
+            - pets_write
       tags:
         - pets
       responses:
@@ -58,6 +64,9 @@ paths:
     get:
       summary: Info for a specific pet
       operationId: showPetById
+      security:
+        - openId:
+            - pets_read
       tags:
         - pets
       parameters:
@@ -82,7 +91,7 @@ paths:
                 $ref: "#/components/schemas/Error"
 components:
   securitySchemes:
-    OIDC:
+    openId:
       type: openIdConnect
       openIdConnectUrl: https://example.com/.well-known/openid-configuration
   schemas:
@@ -115,3 +124,8 @@ components:
           format: int32
         message:
           type: string
+security:
+  - openId:
+      - pets_read
+      - pets_write
+      - admin
